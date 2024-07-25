@@ -1,0 +1,57 @@
+задача 2
+
+1. Получить название, адрес и контактный телефон ресторана с идентификатором 1.
+SELECT Name, Address, Phone
+FROM Restaurant
+WHERE RestaurantID = 1
+
+2. Получить номера и вместимость столов, доступных для бронирования в ресторане с идентификатором 2.
+SELECT TableID, Capacity
+FROM Tables t
+JOIN Restaurant r ON t.TableID = r.RestaurantID 
+and r.RestaurantID = 2 and t.IsAvailable = 1
+
+3. Получить информацию о бронированиях, включая идентификатор бронирования, имя клиента, номер столика и время бронирования для столов из ресторана с идентификатором 3.
+SELECT ReservationID, c.Name, t.TableID, re.ReservationTime
+FROM Customers c, Tables t
+JOIN Reservations re ON  re.CustomerID = c.CustomerID
+and re.TableID = t.TableID
+
+4. Получить идентификатор и имя официантов, работающих в ресторане с идентификатором 4.
+SELECT w.WaiterID, w.Name
+FROM Waiters w
+JOIN Restaurant r ON w.RestaurantID = r.RestaurantID
+and r.RestaurantID = 4
+
+5.Изменить статус доступности столика с номером 5 на "недоступен".
+UPDATE Tables
+SET IsAvailable = 'недоступен'
+WHERE TableID = 5
+
+6.Удалить информацию о клиенте с идентификатором 6 из базы данных
+DELETE FROM Customers
+WHERE CustomerID = 6
+
+Вопрос по этому заданию, когда я пытаюсь удалить строчку нужную, то у меня вот такая ошибка:
+"[22:35:02] Error while executing SQL query on database 'Restaurant': FOREIGN KEY constraint failed" подскажите, почему не могу удалить? По факту, запрос написан правильно
+
+7. Получить все данные о бронировании с идентификатором 7.
+SELECT *
+FROM Reservations re
+JOIN Customers c ON re.CustomerID = c.CustomerID
+JOIN Tables t ON re.TableID = t.TableID and re.ReservationID = 8
+
+8.Получить общее количество столов в ресторане с идентификатором 8.
+SELECT COUNT(TableID)
+FROM Tables t
+JOIN Restaurant r ON t.RestaurantID = r.RestaurantID and r.RestaurantID = 8
+
+9. Получить номера и вместимость столов, вместимость которых больше или равна 6.
+SELECT TableID, Capacity
+FROM Tables
+WHERE Capacity >=6
+
+10.Найти всех клиентов, имя которых содержит "John".
+SELECT Name
+FROM Customers
+WHERE Name LIKE '%John%'
